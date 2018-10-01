@@ -1,6 +1,6 @@
 # Python KMS Server and Client
 
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/badges/shields.svg)
+![GitHub code](https://img.shields.io/badge/code%20size-308%20KB-blue.svg)
 [![License](https://img.shields.io/badge/license-unlicense-lightgray.svg)](https://github.com/yanranxiaoxi/PYKMS/blob/master/LICENSE)
 
 ## 特性
