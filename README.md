@@ -1,6 +1,6 @@
 # Python KMS Server and Client
 
-[![License](https://poser.pugx.org/phpunit/phpunit/license)](https://packagist.org/packages/phpunit/phpunit)
+[![License](https://img.shields.io/badge/license-unlicense-lightgray.svg)](https://github.com/yanranxiaoxi/PYKMS/blob/master/LICENSE)
 
 ## 特性
 
