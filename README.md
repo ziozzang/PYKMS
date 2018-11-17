@@ -68,8 +68,9 @@ python server.py
    ```
    [program:pykms]
    command=python /usr/local/PYKMS/server.py
-   autorestart=true
    user=root
+   autostart=true
+   autorestart=true
    ```
    
    5. 以 daemon 方式运行 supervisor
