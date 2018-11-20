@@ -52,8 +52,7 @@ python server.py
    2. 安装 supervisor
 
    ```
-   yum install python-setuptools && easy_install supervisor && echo_supervisord_conf > /etc/supervisord.conf
-   easy_install supervisor
+   yum install python-setuptools && easy_install supervisor && echo_supervisord_conf > /etc/supervisord.conf && easy_install supervisor
    ```
 
    3. 编写 supervisor 脚本，添加到 /etc/supervisord.conf 文件最后
