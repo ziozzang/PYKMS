@@ -1,6 +1,5 @@
 # Python KMS Server and Client
 
-![GitHub code](https://img.shields.io/badge/code%20size-308%20KB-blue.svg)
 [![License](https://img.shields.io/badge/license-unlicense-lightgray.svg)](https://github.com/yanranxiaoxi/PYKMS/blob/master/LICENSE)
 
 ## 特性
@@ -35,7 +34,7 @@ yum install python-argparse
 git clone https://github.com/yanranxiaoxi/PYKMS
 ```
 
-3. 运行激活服务器
+3. 测试激活服务器
 
 ```
 cd PYKMS
@@ -49,21 +48,15 @@ python server.py
    ```
    cp -r py-kms /usr/local/
    ```
-   
+
    2. 安装 supervisor
 
    ```
-   yum install python-setuptools
+   yum install python-setuptools && easy_install supervisor && echo_supervisord_conf > /etc/supervisord.conf
    easy_install supervisor
    ```
-   
-   3. 生成默认配置文件
 
-   ```
-   echo_supervisord_conf > /etc/supervisord.conf
-   ```
-   
-   4. 编写 supervisor 脚本，添加到 /etc/supervisord.conf 文件最后
+   3. 编写 supervisor 脚本，添加到 /etc/supervisord.conf 文件最后
 
    ```
    [program:pykms]
@@ -72,23 +65,23 @@ python server.py
    autostart=true
    autorestart=true
    ```
-   
-   5. 以 daemon 方式运行 supervisor
+
+   4. 以 daemon 方式运行 supervisor
 
    ```
    supervisord
    ```
-   
+
 5. 客户端测试
 
    * 客户端下载 PYKMS 后，cd 到 PYKMS 目录，并执行
-   
+
    ```
    python client.py -v [server_address]
    ```
-   
+
    * 结果如下说明安装成功
-   
+
    ```
    Connecting to [server_address] on port 1688...
    Connection successful!
@@ -97,6 +90,10 @@ python server.py
    ```
 
 ## 其他
+
+   * [激活 Windows 系统](https://github.com/yanranxiaoxi/PYKMS/blob/master/README-windows.md)
+
+   * [激活 Office 套件](https://github.com/yanranxiaoxi/PYKMS/blob/master/README-office.md)
 
 ### 更改监控地址和端口
 
@@ -131,5 +128,5 @@ python client.py [server_address] [port]
    ```
    micropython -m upip install -r requirements-micropython.txt
    ```
-   
+
 * 仅支持 unix 端口，其他平台缺少部分 stdlib，而且性能可能会存在问题
