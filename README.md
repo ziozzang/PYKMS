@@ -46,7 +46,7 @@ python server.py
    1. 拷贝 PYKMS 文件夹到 /usr/local/ 目录下
 
    ```
-   cp -r py-kms /usr/local/
+   cp -r PYKMS /usr/local/
    ```
 
    2. 安装 supervisor
