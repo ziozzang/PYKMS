@@ -68,7 +68,10 @@ class kmsRequestV6(kmsRequestV5):
 		# HMacKey
 		requestTime = decrypted['requestTime']
 		HMacKey = self.getMACKey(requestTime)
-		HMac = hmac.new(HMacKey, bytes(HMacMsg), hashlib.sha256)
+		if hasattr(hashlib.sha256(), 'digest_size'):
+			HMac = hmac.new(HMacKey, bytes(HMacMsg), hashlib.sha256)
+		else:  # micropython defaultly use uhashlib, which has no digest_size
+			HMac = hmac.new(HMacKey, bytes(HMacMsg), hashlib._sha256.sha256)
 		digest = HMac.digest()
 
 		responsedata = self.DecryptedResponse()

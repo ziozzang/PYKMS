@@ -3,13 +3,14 @@ py-kms is a port of node-kms by [markedsword](http://forums.mydigitallife.info/m
 
 # Features
 - Responds to V4, V5, and V6 KMS requests.
-- Supports activating Windows 7/8/8.1/10/2008R2/2012/2012R2/2016 and Office 2010/2013/2016.
+- Supports activating all versions after Windows Vista / 2008 and Office 2010.
+- If you do want to activate a new version with correct csvlk (not necessary unless you want to pretend an official server), generate a new KmsDataBase.xml using License Manager by Hotbird64 and replace the one in this repo.
 - It's written in Python.
 
 # Dependencies
 - Python 2.6 or higher, micropython v1.9 or higher.
 - Python 2.6 needs the "argparse" module installed.
-- Micropython needs libpcre and libffi, and modules in micropythonlib, check section below.
+- Micropython needs libffi, and modules in micropythonlib, check section below.
 
 # Usage
 - To start the server, execute `python server.py [listen_address] [port]`. The default listening address is `0.0.0.0` (all interfaces) and the default port is `1688`.
@@ -18,6 +19,6 @@ py-kms is a port of node-kms by [markedsword](http://forums.mydigitallife.info/m
 
 # Micropython support (unix port only)
 - Micropython v1.9 is necessary since large int support starts here.
-- You need libpcre and libffi.
+- You need libffi.
 - You need some standard library of module. Use `micropython -m upip install -r requirements-micropython.txt` to install.
 - Only unix port is supported. Other platforms don't have some stdlib and performance may be a problem. 

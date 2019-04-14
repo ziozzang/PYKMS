@@ -23,7 +23,7 @@ def parseitem(iter_tok, parsed, lesslist):
     while True:
         try:
             tok = next(iter_tok)
-        except StopIteration:
+        except (StopIteration, RuntimeError):  # RuntimeError in micropython
             return iter_tok
         if tok[0] == PI:
             pass

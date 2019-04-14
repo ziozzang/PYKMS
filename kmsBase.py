@@ -1,6 +1,6 @@
 import binascii
 import filetimes
-import kmsPidGenerator
+from kmsPidGenFromDB import epidGenerator, kmsdb
 import os
 import os.path
 import sys
@@ -24,8 +24,6 @@ except ImportError:
 
 from xmltok import tokenize
 from uxml2dict import parse
-
-kmsdb = os.path.join(os.path.dirname(__file__), 'KmsDataBase.xml')
 
 licenseStates = {
 	0 : "Unlicensed",
@@ -120,10 +118,8 @@ class kmsBase:
 	def __init__(self, data, config):
 		self.data = data
 		self.config = config
-
-	def serverLogic(self, kmsRequest):
-		if self.config['sqlite'] and self.config['dbSupport']:
-			self.dbName = 'clients.db'
+		self.dbName = os.path.join(os.path.dirname(__file__), 'clients.db')
+		if self.config.get('sqlite', False) and self.config.get('dbSupport', False):
 			if not os.path.isfile(self.dbName):
 				# Initialize the database.
 				con = None
@@ -140,6 +136,8 @@ class kmsBase:
 					if con:
 						con.commit()
 						con.close()
+
+	def serverLogic(self, kmsRequest):
 
 		if self.config['debug']:
 			print("KMS Request Bytes:", binascii.b2a_hex(kmsRequest.__bytes__()))
@@ -159,7 +157,7 @@ class kmsBase:
 		# https://docs.microsoft.com/en-us/windows/deployment/volume-activation/activate-windows-10-clients-vamt
 		kmsdata = parse(tokenize(open(kmsdb)), lesslist=False)['KmsData'][0]
 		appName, skuName, currentClientCount = applicationId, skuId, 25
-		for app in kmsdata['AppItem']:
+		for app in kmsdata['AppItems'][0]['AppItem']:
 			max_activ_thld = 0
 			for kms in app['KmsItem']:
 				max_activ_thld = max(max_activ_thld, int(kms.get('@NCountPolicy', 25)))
@@ -236,7 +234,7 @@ class kmsBase:
 		response['versionMajor'] = kmsRequest['versionMajor']
 
 		if not self.config["epid"]:
-			response["kmsEpid"] = codecs.encode(kmsPidGenerator.epidGenerator(kmsRequest['applicationId'].get(), kmsRequest['versionMajor'], self.config["lcid"]), 'utf_16_le')
+			response["kmsEpid"] = codecs.encode(epidGenerator(kmsRequest['kmsCountedId'].get(), kmsRequest['versionMajor'], self.config["lcid"]), 'utf_16_le')
 		else:
 			response["kmsEpid"] = codecs.encode(self.config["epid"], 'utf_16_le')
 		response['clientMachineId'] = kmsRequest['clientMachineId']

@@ -13,12 +13,11 @@ except ImportError:
 	import upy.codecs as codecs
 
 import filetimes, rpcBind, rpcRequest
-from dcerpc import MSRPCHeader, MSRPCBindNak, MSRPCRespHeader
+from dcerpc import MSRPCHeader, MSRPCBindNak, MSRPCRespHeader, MSRPC_BINDACK, MSRPC_BINDNAK
 from kmsBase import kmsRequestStruct, UUID
 from kmsRequestV4 import kmsRequestV4, generateHash
 from kmsRequestV5 import kmsRequestV5
 from kmsRequestV6 import kmsRequestV6
-from rpcBase import rpcBase
 
 config = {}
 
@@ -58,7 +57,7 @@ def main():
 		print("No data received! Exiting...")
 		sys.exit()
 	packetType = MSRPCHeader(bindResponse)['type']
-	if packetType == rpcBase.packetType['bindAck']:
+	if packetType == MSRPC_BINDACK:
 		if config['verbose']:
 			print("RPC bind acknowledged.")
 		kmsRequest = createKmsRequest()
@@ -79,7 +78,7 @@ def main():
 		print("KMS Host Current Client Count:", kmsResp['currentClientCount'])
 		print("KMS VL Activation Interval:", kmsResp['vLActivationInterval'])
 		print("KMS VL Renewal Interval:", kmsResp['vLRenewalInterval'])
-	elif packetType == rpcBase.packetType['bindNak']:
+	elif packetType == MSRPC_BINDNAK:
 		print(MSRPCBindNak(bindResponse).dump())
 		sys.exit()
 	else:

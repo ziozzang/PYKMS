@@ -2,7 +2,10 @@ import os
 import sys
 import argparse
 import binascii
-import re
+try:
+	import re
+except ImportError:
+	import ure as re
 import socket
 try:
 	import socketserver
@@ -14,8 +17,7 @@ except ImportError:
 import errno
 
 import rpcBind, rpcRequest
-from dcerpc import MSRPCHeader
-from rpcBase import rpcBase
+from dcerpc import MSRPCHeader, MSRPC_BIND, MSRPC_REQUEST, MSRPC_ALTERCTX
 
 try:
 	IOError
@@ -54,7 +56,7 @@ def main():
 		config.update(dict((o.dest, getattr(parsed, o.dest)) for o in parser.opt))
 	# Sanitize HWID
 	try:
-		config['hwid'] = binascii.a2b_hex(re.sub(r'[^0-9a-fA-F]', '', config['hwid'].strip('0x')))
+		config['hwid'] = binascii.a2b_hex(''.join([e for e in config['hwid'].strip('0x') if re.match(r'[0-9a-fA-F]', e)]))
 		if len(binascii.b2a_hex(config['hwid'])) < 16:
 			print("Error: HWID \"%s\" is invalid. Hex string is too short." % binascii.b2a_hex(config['hwid']))
 			return
@@ -118,11 +120,11 @@ class kmsServer(socketserver.BaseRequestHandler):
 			# data = bytearray(data.strip())
 			# print binascii.b2a_hex(str(data))
 			packetType = MSRPCHeader(data)['type']
-			if packetType == rpcBase.packetType['bindReq']:
+			if packetType in (MSRPC_BIND, MSRPC_ALTERCTX):
 				if config['verbose']:
 					print("RPC bind request received.")
 				handler = rpcBind.handler(data, config)
-			elif packetType == rpcBase.packetType['request']:
+			elif packetType == MSRPC_REQUEST:
 				if config['verbose']:
 					print("Received activation request.")
 				handler = rpcRequest.handler(data, config)
@@ -133,10 +135,10 @@ class kmsServer(socketserver.BaseRequestHandler):
 			res = handler.populate().__bytes__()
 			self.request.send(res)
 
-			if packetType == rpcBase.packetType['bindReq']:
+			if packetType == MSRPC_BIND:
 				if config['verbose']:
 					print("RPC bind acknowledged.")
-			elif packetType == rpcBase.packetType['request']:
+			elif packetType == MSRPC_REQUEST:
 				if config['verbose']:
 					print("Responded to activation request.")
 				break

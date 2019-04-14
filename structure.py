@@ -555,13 +555,13 @@ class Structure:
 	def dump(self, msg = None, indent = 0):
 		if msg is None: msg = self.__class__.__name__
 		ind = ' '*indent
-		print("\n%s" % (msg))
+		print("\n%s" % (msg,))
 		fixedFields = []
 		for field in self.commonHdr+self.structure:
 			i = field[0] 
 			if i in self.fields:
 				fixedFields.append(i)
-				if isinstance(self[i], Structure):
+				if hasattr(self[i], 'dump'):
 					self[i].dump('%s%s:{' % (ind,i), indent = indent + 4)
 					print("%s}" % ind)
 				else:
@@ -570,7 +570,7 @@ class Structure:
 		# print them
 		remainingFields = list(set(self.fields) - set(fixedFields))
 		for i in remainingFields:
-			if isinstance(self[i], Structure):
+			if hasattr(self[i], 'dump'):
 				self[i].dump('%s%s:{' % (ind,i), indent = indent + 4)
 				print("%s}" % ind)
 			else:

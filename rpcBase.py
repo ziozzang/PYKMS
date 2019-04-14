@@ -1,26 +1,5 @@
 
 class rpcBase:
-	packetType = {
-		'request' : 0,
-		'ping' : 1,
-		'response' : 2,
-		'fault' : 3,
-		'working' : 4,
-		'nocall' : 5,
-		'reject' : 6,
-		'ack' : 7,
-		'clCancel' : 8,
-		'fack' : 9,
-		'cancelAck' : 10,
-		'bindReq' : 11,
-		'bindAck' : 12,
-		'bindNak' : 13,
-		'alterContext' : 14,
-		'alterContextResp' : 15,
-		'shutdown' : 17,
-		'coCancel' : 18,
-		'orphaned' : 19
-	}
 
 	packetFlags = {
 		'firstFrag' : 1, # 0x01

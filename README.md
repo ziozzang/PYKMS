@@ -4,9 +4,9 @@
 
 ## 特性
 
-* 回应 V4，V5 和 V6 KMS 的请求
+* 回应 V4，V5 和 V6 的 KMS 请求
 
-* 支持激活 Windows 7 / 8 / 8.1 / 10、Windows Server 2008 R2 / 2012 / 2012 R2 / 2016、Office 2010 / 2013 / 2016
+* 支持激活 Windows 7 / 8 / 8.1 / 10、Windows Server 2008 R2 / 2012 / 2012 R2 / 2016、Office 2010 / 2013 / 2016 / 2019
 
 * 使用 Python 运行
 

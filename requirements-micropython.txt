@@ -2,7 +2,6 @@ micropython-argparse
 micropython-errno
 micropython-future
 micropython-hmac
-micropython-re-pcre
 micropython-stat
 micropython-warnings
 micropython-binascii
